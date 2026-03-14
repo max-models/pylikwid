@@ -127,31 +127,13 @@ def get_libraries():
         libs.append("bstr")
     return libs
 
-def get_sources():
-    sources = ["src/pylikwid/pylikwid.c"]
-    for candidate in [
-        os.path.join(LIKWID_INCPATH, "bstrlib.c"),
-        "/usr/local/include/bstrlib.c",
-        "/usr/include/bstrlib.c",
-    ]:
-        if os.path.exists(candidate):
-            print(f"Adding bstrlib from {candidate}")
-            sources.append(candidate)
-            break
-    return sources
-
 pylikwid = Extension("pylikwid.pylikwid",
                      include_dirs=["src/pylikwid", LIKWID_INCPATH],
                      libraries=get_libraries(),
                      library_dirs=[LIKWID_LIBPATH],
                      runtime_library_dirs=[LIKWID_LIBPATH],
                      extra_compile_args=get_extra_compile_args(),
-                     sources=get_sources(),
-                     #  sources=["src/pylikwid/pylikwid.c"],
-                     # Bugfix for static linking
-                     #  extra_link_args=["-Wl,--whole-archive",
-                     #                   f"-l:liblikwid.so",
-                     #                   "-Wl,--no-whole-archive"],
+                     sources = ["src/pylikwid/pylikwid.c"]
                      py_limited_api=True,
 )
 
