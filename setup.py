@@ -1,5 +1,6 @@
 import os, os.path, glob, re, sys
 from setuptools import setup, Extension
+import ctypes
 
 ver_regex = re.compile(r"so.(\d+)[.]*(\d*)")
 
@@ -99,20 +100,22 @@ def get_extra_compile_args():
     if os.environ.get("LIKWID_NVMON") not in (None, "0"):
         extra_args.append("-DLIKWID_NVMON")
 
-    # Add likwid version definitions from likwid.h.
-    likwid_header_path = f"{LIKWID_INCPATH}/likwid.h"
-    with open(likwid_header_path) as f:
-        for line in f:
-            if not line.startswith("#define LIKWID_VERSION"):
-                continue
-            major, release, minor = line.split()[-1].strip('"').split(".")
-            extra_args.extend([
-                f"-DLIKWID_MAJOR={major}",
-                f"-DLIKWID_RELEASE={release}",
-                f"-DLIKWID_MINOR={minor}",
-            ])
-            break
+    # Query version directly from the library using the exported symbols
+    libpath = os.path.join(LIKWID_LIBPATH, "liblikwid.so")
+    lib = ctypes.CDLL(libpath)
+    lib.likwid_getMajorVersion.restype = ctypes.c_int
+    lib.likwid_getMinorVersion.restype = ctypes.c_int
+    lib.likwid_getBugfixVersion.restype = ctypes.c_int
 
+    major = lib.likwid_getMajorVersion()
+    release = lib.likwid_getMinorVersion()
+    minor = lib.likwid_getBugfixVersion()
+
+    extra_args.extend([
+        f"-DVERSION={major}",
+        f"-DRELEASE={release}",
+        f"-DMINORVERSION={minor}",
+    ])
     return extra_args
 
 
@@ -126,3 +129,4 @@ pylikwid = Extension("pylikwid",
 setup(
     ext_modules=[pylikwid],
 )
+
