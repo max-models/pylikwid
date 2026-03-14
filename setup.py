@@ -119,10 +119,11 @@ def get_extra_compile_args():
     return extra_args
 
 
-pylikwid = Extension("pylikwid",
-                     include_dirs=[LIKWID_INCPATH],
+pylikwid = Extension("pylikwid.pylikwid",
+                     include_dirs=["src/pylikwid", LIKWID_INCPATH],
                      libraries=[LIKWID_LIB],
                      library_dirs=[LIKWID_LIBPATH],
+                     runtime_library_dirs=[LIKWID_LIBPATH],
                      extra_compile_args=get_extra_compile_args(),
                      sources=["src/pylikwid/pylikwid.c"])
 
