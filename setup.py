@@ -113,9 +113,9 @@ def get_extra_compile_args():
     minor = lib.likwid_getBugfixVersion()
 
     extra_args.extend([
-        f"-DVERSION={major}",
-        f"-DRELEASE={release}",
-        f"-DMINORVERSION={minor}",
+        f"-DLIKWID_MAJOR={major}",
+        f"-DLIKWID_RELEASE={release}",
+        f"-DLIKWID_MINOR={minor}",
     ])
     return extra_args
 
@@ -127,8 +127,16 @@ def get_libraries():
         libs.append("bstr")
     return libs
 
+
+def get_include_dirs():
+    include_dirs = ["src/pylikwid", LIKWID_INCPATH]
+    likwid_subdir = os.path.join(LIKWID_INCPATH, "likwid")
+    if os.path.isdir(likwid_subdir):
+        include_dirs.append(likwid_subdir)
+    return include_dirs
+
 pylikwid = Extension("pylikwid.pylikwid",
-                     include_dirs=["src/pylikwid", LIKWID_INCPATH],
+                     include_dirs=get_include_dirs(),
                      libraries=get_libraries(),
                      library_dirs=[LIKWID_LIBPATH],
                      runtime_library_dirs=[LIKWID_LIBPATH],
