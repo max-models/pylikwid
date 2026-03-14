@@ -13,14 +13,13 @@ license = { file = "LICENSE" }
 authors = [
   { name = "Thomas Roehl", email = "thomas.roehl@googlemail.com" },
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.78"
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
   "Intended Audience :: Science/Research",
   "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -38,3 +37,4 @@ urls.Homepage = "https://github.com/RRZE-HPC/pylikwid"
 [tool.setuptools]
 packages = [ "pylikwid" ]
 package-dir = { "" = "src" }
+
