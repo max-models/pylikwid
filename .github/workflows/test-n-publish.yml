@@ -23,9 +23,7 @@ jobs:
         sudo modprobe msr
     - name: Install
       run: |
-        python3 -m pip install --upgrade pip
-        python3 -m pip install setuptools
-        python3 setup.py build_ext
+        python3 -m pip install --upgrade pip setuptools
         python3 -m pip install -e .
     - name: Test
       run: |
@@ -36,7 +34,8 @@ jobs:
         ./tests/testaffinity.py
     - name: Build package
       run: |
-        python setup.py build sdist
+        python3 -m pip install build
+        python3 -m build
     - name: Publish to PyPI
       if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
       uses: pypa/gh-action-pypi-publish@master
