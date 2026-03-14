@@ -389,10 +389,13 @@ likwid_inittopology(PyObject *self, PyObject *args)
 static PyObject *
 likwid_finalizetopology(PyObject *self, PyObject *args)
 {
-    topology_finalize();
-    topo_initialized = 0;
-    cputopo = NULL;
-    cpuinfo = NULL;
+    if (topo_initialized == 1)
+    {
+        topology_finalize();
+        topo_initialized = 0;
+        cputopo = NULL;
+        cpuinfo = NULL;
+    }
     Py_RETURN_NONE;
 }
 
