@@ -11,17 +11,25 @@ authors = [
 ]
 readme = "README.rst"
 license = { file = "LICENSE" }
-url = "https://github.com/RRZE-HPC/pylikwid"
 requires-python = ">=3.7"
+keywords = ["hpc", "performance", "benchmark", "analysis"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    "Programming Language :: Python :: 3",
+]
+
+[project.urls]
+Homepage = "https://github.com/RRZE-HPC/pylikwid"
+
+[project.optional-dependencies]
+test = ["pytest"]
 
 [tool.setuptools]
 packages = ["pylikwid"]
 package-dir = {"" = "src"}
-
-
-[tool.setuptools.ext_modules]
-name = "pylikwid.pylikwid"
-sources = ["src/pylikwid/pylikwid.c"]
-
-[project.optional-dependencies]
-test = ["pytest"]
