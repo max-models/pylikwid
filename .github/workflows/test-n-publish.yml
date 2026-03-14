@@ -25,6 +25,10 @@ jobs:
       run: |
         python3 -m pip install --upgrade pip setuptools
         python3 -m pip install -e .
+    - name: Debug LIKWID libs
+      run: |
+        ls /usr/local/lib/liblik* /usr/local/lib/libbstr* || true
+        nm -D /usr/local/lib/liblikwid.so | grep bdata || true
     - name: Test
       run: |
         export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
