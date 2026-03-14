@@ -1,6 +1,6 @@
 import glob
 import os, os.path, glob, re, sys
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 import ctypes
 
 ver_regex = re.compile(r"so.(\d+)[.]*(\d*)")
@@ -138,6 +138,13 @@ pylikwid = Extension("pylikwid.pylikwid",
 )
 
 setup(
+    name="pylikwid",
+    version="0.4.2",
+    author="Thomas Gruber",
+    author_email="thomas.roehl@googlemail.com",
+    description="A Python module to access the functions of the LIKWID library",
+    license="GPLv2",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     ext_modules=[pylikwid],
 )
-
