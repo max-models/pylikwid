@@ -134,6 +134,10 @@ pylikwid = Extension("pylikwid.pylikwid",
                      runtime_library_dirs=[LIKWID_LIBPATH],
                      extra_compile_args=get_extra_compile_args(),
                      sources=["src/pylikwid/pylikwid.c"],
+                     # Bugfix for static linking
+                     extra_link_args=["-Wl,--whole-archive",
+                                      f"-l:liblikwid.so",
+                                      "-Wl,--no-whole-archive"],
                      py_limited_api=True,
 )
 
