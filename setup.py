@@ -1,3 +1,4 @@
+import glob
 import os, os.path, glob, re, sys
 from setuptools import setup, Extension
 import ctypes
@@ -118,10 +119,17 @@ def get_extra_compile_args():
     ])
     return extra_args
 
+def get_libraries():
+    libs = [LIKWID_LIB]
+    # bstrlib is bundled into liblikwid on some installs but separate on others
+    bstrlib = glob.glob(os.path.join(LIKWID_LIBPATH, "libbstr*.so*"))
+    if bstrlib:
+        libs.append("bstr")
+    return libs
 
 pylikwid = Extension("pylikwid.pylikwid",
                      include_dirs=["src/pylikwid", LIKWID_INCPATH],
-                     libraries=[LIKWID_LIB],
+                     libraries=get_libraries(),
                      library_dirs=[LIKWID_LIBPATH],
                      runtime_library_dirs=[LIKWID_LIBPATH],
                      extra_compile_args=get_extra_compile_args(),
