@@ -133,7 +133,9 @@ pylikwid = Extension("pylikwid.pylikwid",
                      library_dirs=[LIKWID_LIBPATH],
                      runtime_library_dirs=[LIKWID_LIBPATH],
                      extra_compile_args=get_extra_compile_args(),
-                     sources=["src/pylikwid/pylikwid.c"])
+                     sources=["src/pylikwid/pylikwid.c"],
+                     py_limited_api=True,
+)
 
 setup(
     ext_modules=[pylikwid],
